@@ -31,10 +31,10 @@
 (require 'request)
 
 (defvar paste-of-code--cookie-regexp "session=\\([^;]+\\)"
-  "Regular expression to get the Session ID from the response's headers")
+  "Regular expression to get the Session ID from the response's headers.")
 
 (defvar paste-of-code--cookie-string ""
-  "Cookies for https://paste.ofcode.org")
+  "Cookies for https://paste.ofcode.org.")
 
 (defvar paste-of-code--major-mode-to-language
   `(("emacs-lisp-mode" . "emacs")
@@ -48,6 +48,7 @@
     ("cperl-mode"      . "perl")))
 
 (defun paste-of-code//fetch-cookie ()
+  "Fetch cookie from 'https://paste.ofcode.org for further communication."
   (let* ((response (request
 		    "https://paste.ofcode.org"
 		    :type "GET"
@@ -59,6 +60,7 @@
        (setq paste-of-code--cookie-string cookie-string)))
 
 (defun paste-of-code//paste-code ()
+  "Upload code and copy link into 'kill-ring'.  The language will be determined by the major mode in the buffer."
   (let* ((response (request
 		    "https://paste.ofcode.org"
 		    :type "POST"
@@ -72,6 +74,7 @@
     (kill-new paste-of-code-link)))
 
 (defun paste-of-code-paste-code ()
+  "Upload current buffer and copy link into 'kill-ring'.  The language will be determined by the major mode in the current buffer."
   (interactive)
   (paste-of-code//fetch-cookie)
   (paste-of-code//paste-code))
