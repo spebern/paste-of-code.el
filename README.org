@@ -1,0 +1,18 @@
+* paste-of-code.el
+  Paste source code on https://paste.ofcode.org/.
+  
+  If a region is selected, then the code inside will be uploaded, otherwise the whole buffer.
+  The link will be copied to the kill ring and will also be opened in the browser.
+** Install
+   Use =M-x package-install RET paste-of-code= to install. Make sure you have
+   the [[http://melpa.milkbox.net/][MELPA]] package archive enabled in your init.el or .emacs and your package
+   contents are up to date (use =M-x package-refresh-contents= if you can't
+   find the www-synonyms package and you've added MELPA to your package archives.
+#+BEGIN_SRC emacs-lisp
+  (use-package paste-of-code
+    ensure: t)
+#+END_SRC
+** Usage
+   =M-x paste-of-code-paste-code=
+** License
+   Same as Emacs, see the file LICENSE for more info
