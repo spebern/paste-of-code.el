@@ -34,7 +34,7 @@
 (defvar paste-of-code--cookie-string ""
   "Cookies for https://paste.ofcode.org.")
 
-(defun paste-of-code--buffer-or-region ()
+(defun paste-of-code//buffer-or-region ()
   "Return region as string if selected or whole buffer as string otherwise."
   (if mark-active
       (buffer-substring-no-properties (region-beginning) (region-end))
@@ -91,6 +91,15 @@
     ("perl-mode"        . "perl")
     ("cperl-mode"       . "perl")))
 
+(defun paste-of-code//determine-language ()
+  "Determines the language by looking at the major mode."
+  (let ((language-mapping (assoc (format "%s" major-mode) paste-of-code--major-mode-to-language)))
+    (if language-mapping
+	(cdr language-mapping)
+      (error
+       (format "Could not find language corresponding to major mode: '%s' Pull request?."
+	       major-mode)))))
+
 (defun paste-of-code//fetch-cookie ()
   "Fetch cookie from 'https://paste.ofcode.org for further communication."
   (let* ((response (request
@@ -103,7 +112,7 @@
        			  (match-string 1 cookie-header))))
        (setq paste-of-code--cookie-string cookie-string)))
 
-(defun paste-of-code//paste-code ()
+(defun paste-of-code//paste-code (code language)
   "Paste code to paste.ofcode.org and return link."
   (let* ((response (request
 		    "https://paste.ofcode.org"
@@ -111,8 +120,8 @@
 		    :sync t
 		    :headers `(("referer" . "https://paste.ofcode.org")
 			       ("cookie"  . ,(format "ofcode=%s" paste-of-code--cookie-string)))
-		    :data `(("code"     . ,(paste-of-code--buffer-or-region))
-			    ("language" . ,(cdr (assoc (format "%s" major-mode) paste-of-code--major-mode-to-language)))
+		    :data `(("code"     . ,code)
+			    ("language" . ,language)
 			    ("notabot"  . "most_likely"))))
 	 (paste-of-code-link (request-response-url response)))
     paste-of-code-link))
@@ -121,8 +130,12 @@
   "Upload current region or buffer, copy to kill ring and open in browser.  The language will be determined by the major mode in the current buffer."
   (interactive)
   (paste-of-code//fetch-cookie)
-  (let ((paste-of-code-link (paste-of-code//paste-code)))
+  (let ((paste-of-code-link (paste-of-code//paste-code
+			     (paste-of-code//buffer-or-region)
+			     (paste-of-code//determine-language))))
     (kill-new paste-of-code-link)
     (browse-url paste-of-code-link)))
+
+(provide 'paste-of-code)
 
 ;;; paste-of-code.el ends here
