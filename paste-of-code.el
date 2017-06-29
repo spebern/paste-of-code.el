@@ -104,7 +104,7 @@
        (setq paste-of-code--cookie-string cookie-string)))
 
 (defun paste-of-code//paste-code ()
-  "Upload code and copy link into 'kill-ring'.  The language will be determined by the major mode in the buffer."
+  "Paste code to paste.ofcode.org and return link."
   (let* ((response (request
 		    "https://paste.ofcode.org"
 		    :type "POST"
@@ -115,12 +115,14 @@
 			    ("language" . ,(cdr (assoc (format "%s" major-mode) paste-of-code--major-mode-to-language)))
 			    ("notabot"  . "most_likely"))))
 	 (paste-of-code-link (request-response-url response)))
-    (kill-new paste-of-code-link)))
+    paste-of-code-link))
 
 (defun paste-of-code-paste-code ()
-  "Upload current buffer and copy link into 'kill-ring'.  The language will be determined by the major mode in the current buffer."
+  "Upload current region or buffer, copy to kill ring and open in browser.  The language will be determined by the major mode in the current buffer."
   (interactive)
   (paste-of-code//fetch-cookie)
-  (paste-of-code//paste-code))
+  (let ((paste-of-code-link (paste-of-code//paste-code)))
+    (kill-new paste-of-code-link)
+    (browse-url paste-of-code-link)))
 
 ;;; paste-of-code.el ends here
