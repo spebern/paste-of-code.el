@@ -97,7 +97,7 @@
     (if language-mapping
 	(cdr language-mapping)
       (error
-       (format "Could not find language corresponding to major mode: '%s' Pull request?."
+       (format "Could not find language corresponding to major mode: '%s' Pull request?"
 	       major-mode)))))
 
 (defun paste-of-code//fetch-cookie ()
