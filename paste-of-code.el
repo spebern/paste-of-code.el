@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; Paste code on https://paste.ofcode.org for many different languages
+;; Paste code on https://paste.ofcode.org for many languages
 
 ;;; Code:
 
