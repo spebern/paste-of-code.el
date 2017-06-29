@@ -34,6 +34,12 @@
 (defvar paste-of-code--cookie-string ""
   "Cookies for https://paste.ofcode.org.")
 
+(defun paste-of-code--buffer-or-region ()
+  "Return region as string if selected or whole buffer as string otherwise."
+  (if mark-active
+      (buffer-substring-no-properties (region-beginning) (region-end))
+    (buffer-string)))
+
 (defvar paste-of-code--major-mode-to-language
   `(("emacs-lisp-mode"  . "emacs")
     ("python-mode"      . "python")
@@ -91,10 +97,10 @@
 		    "https://paste.ofcode.org"
 		    :type "GET"
 		    :sync t))
-       	 (header (request-response-header response "set-cookie"))
+       	 (cookie-header (request-response-header response "set-cookie"))
        	 (cookie-string (progn
-       			  (string-match paste-of-code--cookie-regexp cookie-str)
-       			  (match-string 1 cookie-str))))
+       			  (string-match paste-of-code--cookie-regexp cookie-header)
+       			  (match-string 1 cookie-header))))
        (setq paste-of-code--cookie-string cookie-string)))
 
 (defun paste-of-code//paste-code ()
@@ -105,7 +111,7 @@
 		    :sync t
 		    :headers `(("referer" . "https://paste.ofcode.org")
 			       ("cookie"  . ,(format "ofcode=%s" paste-of-code--cookie-string)))
-		    :data `(("code"     . ,(buffer-string))
+		    :data `(("code"     . ,(paste-of-code--buffer-or-region))
 			    ("language" . ,(cdr (assoc (format "%s" major-mode) paste-of-code--major-mode-to-language)))
 			    ("notabot"  . "most_likely"))))
 	 (paste-of-code-link (request-response-url response)))
