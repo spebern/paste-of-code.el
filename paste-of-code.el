@@ -126,6 +126,7 @@
 	 (paste-of-code-link (request-response-url response)))
     paste-of-code-link))
 
+;;;###autoload
 (defun paste-of-code-paste-code ()
   "Upload current region or buffer, copy to kill ring and open in browser.  The language will be determined by the major mode in the current buffer."
   (interactive)
