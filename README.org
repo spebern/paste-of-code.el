@@ -1,3 +1,5 @@
+[[https://travis-ci.org/spebern/paste-of-code.el.svg?branch=master]]
+
 * paste-of-code.el
   Paste source code on https://paste.ofcode.org/.
   
