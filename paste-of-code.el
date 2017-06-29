@@ -23,8 +23,6 @@
 ;;; Commentary:
 
 ;; Paste code on https://paste.ofcode.org for many different languages
-;; Supported languages are
-;;  - python
 
 ;;; Code:
 
@@ -37,15 +35,55 @@
   "Cookies for https://paste.ofcode.org.")
 
 (defvar paste-of-code--major-mode-to-language
-  `(("emacs-lisp-mode" . "emacs")
-    ("python-mode"     . "python")
-    ("perl6-mode"      . "perl6")
-    ("c-mode"          . "c")
-    ("c++-mode"        . "cpp")
-    ("js2-mode"        . "js")
-    ("js-mode"         . "js")
-    ("perl-mode"       . "perl")
-    ("cperl-mode"      . "perl")))
+  `(("emacs-lisp-mode"  . "emacs")
+    ("python-mode"      . "python")
+    ("perl6-mode"       . "perl6")
+    ("c-mode"           . "c")
+    ("c++-mode"         . "cpp")
+    ("js2-mode"         . "js")
+    ("js-mode"          . "js")
+    ("go-mode"          . "go")
+    ("rust-mode"        . "rust")
+    ("octave-mode"      . "octave")
+    ("java-mode"        . "java")
+    ("ada-mode"         . "ada")
+    ("ruby-mode"        . "rb")
+    ("clojure-mode"     . "clojure")
+    ("julia-mode"       . "julia")
+    ("shell-mode"       . "bash")
+    ("xml-mode"         . "xml")
+    ("yaml-mode"        . "yaml")
+    ("typescript-mode"  . "ts")
+    ("scheme-mode"      . "scheme")
+    ("scala"            . "scala")
+    ("latex-mode"       . "tex")
+    ("switft-mode"      . "switft")
+    ("switft3-mode"     . "switft")
+    ("tcl-mode"         . "tcl")
+    ("racket-mode"      . "racket")
+    ("common-lisp-mode" . "common-lisp")
+    ("php-mode"         . "php")
+    ("objc-mode"        . "objective-c")
+    ("json-mode"        . "json")
+    ("sql-mode"         . "sql")
+    ("html-mode"        . "html")
+    ("fsharp-mode"      . "fsharp")
+    ("erlang-mode"      . "erlang")
+    ("elixir-mode"      . "elixir")
+    ("cobol-mode"       . "cobol")
+    ("d-mode"           . "d")
+    ("css-mode"         . "css")
+    ("brainfuck-mode"   . "brainfuck")
+    ("csharp-mode"      . "csharp")
+    ("j-mode"           . "j")
+    ("fortran-mode"     . "fortran")
+    ("cmake-mode"       . "cmake")
+    ("cuda-mode"        . "cuda")
+    ("puppet-mode"      . "puppet")
+    ("lua-mode"         . "lua")
+    ("matlab-mode"      . "matlab")
+    ("perl-mode"        . "perl")
+    ("cperl-mode"       . "perl")))
 
 (defun paste-of-code//fetch-cookie ()
   "Fetch cookie from 'https://paste.ofcode.org for further communication."
