@@ -135,6 +135,7 @@
 			     (paste-of-code--buffer-or-region)
 			     (paste-of-code--determine-language))))
     (kill-new paste-of-code-link)
+    (deactivate-mark)
     (browse-url paste-of-code-link)))
 
 (provide 'paste-of-code)
