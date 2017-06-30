@@ -130,7 +130,7 @@
 (defun paste-of-code-paste-code ()
   "Upload current region or buffer, copy to kill ring and open in browser.  The language will be determined by the major mode in the current buffer."
   (interactive)
-  (paste-of-code//fetch-cookie)
+  (paste-of-code--fetch-cookie)
   (let ((paste-of-code-link (paste-of-code--paste-code
 			     (paste-of-code--buffer-or-region)
 			     (paste-of-code--determine-language))))
